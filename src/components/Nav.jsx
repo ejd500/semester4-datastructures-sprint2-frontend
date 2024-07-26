@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom"
 import "../styles/nav.css"
 import { RiSearchLine } from 'react-icons/ri';
-import useFetch from "../customhooks/useFetch";
-import { useState } from "react";
-import { clear } from "@testing-library/user-event/dist/clear";
 
-const Nav = ({searchTerm, setSearchTerm, setSearchResults}) => {
+const Nav = ({searchTerm, setSearchTerm, setSearchResults, setData}) => {
 
   const viewPreviousTrees = () => {
     setSearchResults(null)
@@ -19,6 +16,7 @@ const Nav = ({searchTerm, setSearchTerm, setSearchResults}) => {
       const json = await response.json();
       console.log(json);
       setSearchResults(json);
+      setData(null);
       event.target.reset(); // Resets the form
     } catch (error) {
       console.error('Error searching:', error);

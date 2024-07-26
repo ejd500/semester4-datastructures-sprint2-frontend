@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import usePost from '../customhooks/usePost';  // Adjust the path as necessary
 import Nav from "./Nav"
 import "../styles/postForm.css"
 
-const PostForm = ({searchResults, setSearchResults, searchTerm, setSearchTerm}) => {
+const PostForm = ({searchResults, setSearchResults, searchTerm, setSearchTerm, treeData, treeLoading, treeError, postTreeData, data, setData}) => {
     const [number, setNumber] = useState('');  // Local state for number input
-    const { data: treeData, loading: treeLoading, error: treeError, postData: postTreeData } = usePost('http://localhost:8080/tree');
+    
     const [integerList, setIntegerList] = useState([]); // State to hold the list of integers
-
     
     const clearList = () =>{
         setIntegerList([]); // Clear integerList
@@ -32,12 +30,12 @@ const PostForm = ({searchResults, setSearchResults, searchTerm, setSearchTerm}) 
     // Handle form submission to backend
     const handleSubmit = (event) => {
         event.preventDefault(); // Prevent form submission
-        postTreeData(integerList); // Call postTreeData with the form data as an integer list
+        setData(postTreeData(integerList))
     };
 
   return (
     <div>
-        <Nav searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResults={setSearchResults}/>
+        <Nav searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResults={setSearchResults} setData={setData}/>
 
         <div className='main'>
             <form className="inputNumbersForm" onSubmit={addNumberToArray}>
@@ -65,17 +63,15 @@ const PostForm = ({searchResults, setSearchResults, searchTerm, setSearchTerm}) 
                     <button onClick={clearList}>Clear List</button>
                     <button onClick={handleSubmit}>Submit List</button>
                 </div>
-
-
-            
-       
             </form>
 
         </div>
 
+        
+        
         {treeLoading && <h3 id="loading">Loading...</h3>}
         {treeError && <h3 id="error">Error: {treeError.message}</h3>}
-        {treeData && 
+        {data && 
         (<div>
             <h3 id="treeHeading">Binary Tree:</h3>
             <div className='binaryTree'>
@@ -86,12 +82,16 @@ const PostForm = ({searchResults, setSearchResults, searchTerm, setSearchTerm}) 
 
         {searchResults && 
         (<div>
-            <h3 id="treeHeading">Binary Tree:</h3>
+            <h3 id="treeHeading">Binary Tree Search Result:</h3>
             <div className='binaryTree'>
                 <pre>{JSON.stringify(searchResults, null, 2)}</pre>
             </div>
         </div>
         )}
+
+        
+
+        
     </div>
   );
 };
