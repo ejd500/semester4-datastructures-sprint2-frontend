@@ -1,0 +1,16 @@
+h3{
+    font-size: 24px;
+    color: rgba(65, 69, 72, 1);
+}
+.homeMain{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 100px;
+}
+#welcome{
+    width: 50%;
+    line-height: 40px;
+}
