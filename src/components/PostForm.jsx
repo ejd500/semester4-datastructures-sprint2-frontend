@@ -10,6 +10,7 @@ const PostForm = ({searchResults, setSearchResults, searchTerm, setSearchTerm, t
     const clearList = () =>{
         setIntegerList([]); // Clear integerList
         setSearchResults(null);
+        setData(null);
     }
 
     // Add number to integerList array
